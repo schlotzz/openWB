@@ -243,12 +243,12 @@ class Frame:
     
             data_length -= self.frame_type                             # substract frame type specific length
     
-            self.id = struct.unpack(">I", self.stream[idx:idx+4])[0]
-            self.id_obj = find_by_id(self.id)
-            idx += 4
             if self.frame_type == FRAME_TYPE_PLANT:
                 self.address = struct.unpack(">I", self.stream[idx:idx+4])[0]
                 idx += 4
+            self.id = struct.unpack(">I", self.stream[idx:idx+4])[0]
+            self.id_obj = find_by_id(self.id)
+            idx += 4
             self.data = self.stream[idx:idx+data_length]
             self.data_dump = binascii.hexlify(self.data)                # just for debugging
             idx += data_length
